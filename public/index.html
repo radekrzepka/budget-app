@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>Logowanie</title>
+		<link rel="stylesheet" href="./style/main.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<main class="main-login">
+			<form class="login">
+				<h2>Zaloguj się</h2>
+				<label for="e-mail-login">Podaj e-mail: </label>
+				<input type="text" id="e-mail-login" class="login-input" />
+				<label for="password-login">Podaj hasło: </label>
+				<input type="password" id="password-login" class="login-input" />
+				<button type="button" class="button-login">Zaloguj się</button>
+				<p class="warning-login"></p>
+			</form>
+			<form class="register">
+				<h2>Zarejestruj się</h2>
+				<label for="e-mail-register">Podaj e-mail: </label>
+				<input type="text" id="e-mail-register" class="register-input" />
+				<label for="password-register">Podaj hasło: </label>
+				<input type="password" id="password-register" class="register-input" />
+				<label for="password-again-register">Ponownie podaj hasło: </label>
+				<input type="password" id="password-again-register" class="register-input" />
+				<button type="button" class="button-register">Stwórz konto</button>
+				<p class="warning-register"></p>
+				<p class="success-register"></p>
+			</form>
+		</main>
+		<script src="./js/index/main.js" type="module" defer></script>
+	</body>
+</html>
