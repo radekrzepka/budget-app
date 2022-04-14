@@ -38,10 +38,10 @@ export const printMonthInCalendar = (month = new Date().getMonth() + 1, year = n
 		for (let i = 1; i <= daysInMonth(month, year); i++) {
 			const div = document.createElement("div");
 
-			const date = new Date(month, year - 1, i);
+			const date = new Date(year, month - 1, i);
 			div.classList.add(whatClassToDay(date.getDay()));
 			div.textContent = i;
-			div.id = `${i}.${month}.${year}`;
+			div.id = `${i}.${month >= 10 ? month : "0" + month}.${year}`;
 
 			if (records !== null) {
 				if (records.some(record => record.date === div.id)) {
@@ -51,7 +51,6 @@ export const printMonthInCalendar = (month = new Date().getMonth() + 1, year = n
 					else div.classList.add("expense-record");
 				}
 			}
-
 			const printRecords = () => {
 				const recordsContainer = document.querySelector(".records-container");
 				const thisDayRecords = records.filter(record => record.date === div.id);
