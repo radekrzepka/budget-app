@@ -657,4 +657,16 @@ body {
   width: 30%;
   height: 20px;
 }
+
+@media (max-width: 1000px) {
+  .main-charts {
+    width: 80%;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-charts {
+    width: 100%;
+  }
+}
 /*# sourceMappingURL=main.css.map */

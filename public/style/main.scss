@@ -524,3 +524,15 @@ body {
 		height: 20px;
 	}
 }
+
+@media (max-width: $small-laptops) {
+	.main-charts {
+		width: 80%;
+	}
+}
+
+@media (max-width: $large-phones) {
+	.main-charts {
+		width: 100%;
+	}
+}
