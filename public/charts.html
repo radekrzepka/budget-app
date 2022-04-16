@@ -11,13 +11,16 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 	</head>
 	<body>
 		<header class="header">
 			<h1>Budget tracker</h1>
 		</header>
 		<main class="main-charts">
-			<h1>Strona w trakcie budowy</h1>
+			<h1>Wykres wydatków i przychodów</h1>
+			<input type="number" class="switchYearChart" value="2022" />
+			<canvas id="chart"></canvas>
 		</main>
 		<nav class="navigation">
 			<a class="navigation-element" href="home.html">
