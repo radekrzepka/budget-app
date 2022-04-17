@@ -11,16 +11,16 @@ export const checkFormAndAddOrSwitchData = (event = null) => {
 	let add = true;
 	if (event.currentTarget.switch) add = false;
 
-	console.log(add);
-
 	const nameInput = document.querySelector("#name");
 	const valueInput = document.querySelector("#value");
 	const dateInput = document.querySelector("#date");
 	const incomeRadioInput = document.querySelector("#income");
 	const exponseRadioInput = document.querySelector("#expense");
 
+	console.log(incomeRadioInput.value, exponseRadioInput.value);
+
 	const vaildateForm = () => {
-		if (nameInput.value === "" || valueInput.value === "" || dateInput.value === "" || dateInput.value === "" || incomeRadioInput.value === "" || exponseRadioInput.value === "") return "Uzupełnij wszystkie pola formularzy.";
+		if (nameInput.value === "" || valueInput.value === "" || dateInput.value === "" || dateInput.value === "" || (!incomeRadioInput.checked && !exponseRadioInput.checked)) return "Uzupełnij wszystkie pola formularzy.";
 		else if (parseFloat(valueInput.value) <= 0) return "Kwota musi być większa od 0 złotych.";
 		else return "poprawne dane";
 	};
@@ -31,7 +31,7 @@ export const checkFormAndAddOrSwitchData = (event = null) => {
 		} else {
 			const buttonID = event.currentTarget.id.replace("change", "");
 			switchData(buttonID, nameInput.value, parseFloat(valueInput.value), new Date(dateInput.value).toLocaleDateString(), incomeRadioInput.checked);
-			setTimeout(deleteForm, 1);
+			setTimeout(deleteForm, 100);
 		}
 		deleteForm();
 

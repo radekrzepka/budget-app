@@ -70,6 +70,7 @@ previousMonthButton.addEventListener("click", () => {
 	}
 	printMonthInCalendar(currentMonth, currentYear);
 	printNameOfMonth(currentMonth, currentYear);
+	document.querySelector(".records-container").innerHTML = "";
 });
 
 nextMonthButton.addEventListener("click", () => {
@@ -80,6 +81,7 @@ nextMonthButton.addEventListener("click", () => {
 	}
 	printMonthInCalendar(currentMonth, currentYear);
 	printNameOfMonth(currentMonth, currentYear);
+	document.querySelector(".records-container").innerHTML = "";
 });
 
 printMonthInCalendar(currentMonth, currentYear);

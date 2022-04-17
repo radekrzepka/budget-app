@@ -63,7 +63,6 @@ export const sendRecordToDataBase = (name, value, date, income) => {
 		};
 
 		getRecordsLength().then(length => {
-			console.log(length);
 			set(ref(db, `/users/${userData.userID}/records/${length}`), {
 				name: name,
 				value: value,
