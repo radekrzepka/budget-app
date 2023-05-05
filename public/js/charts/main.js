@@ -1,9 +1,13 @@
 import { addEventListenerToAddRecordButton } from "../addOrSwitchNewRecord.js";
-import { getUserData, addEventListenerToLogOutButton } from "../firebaseService.js";
+import {
+	getUserData,
+	addEventListenerToLogOutButton,
+} from "../firebaseService.js";
 
 getUserData().then(user => {
 	const lastSlash = location.href.lastIndexOf("/");
-	if (user == undefined) location.href = `${location.href.substring(0, lastSlash)}/index.html`;
+	if (user == undefined)
+		location.href = `${location.href.substring(0, lastSlash)}/index.html`;
 });
 
 addEventListenerToAddRecordButton();
@@ -62,7 +66,7 @@ const generateDataToCharts = year => {
 	return new Promise(resolve => {
 		getUserData().then(data => {
 			const dataFromGivenYear = data.records.filter(record => {
-				const recordYear = record.date.split(".")[2];
+				const recordYear = record.date.split("/")[2];
 				return year == recordYear;
 			});
 			const incomes = [];
@@ -70,9 +74,9 @@ const generateDataToCharts = year => {
 			for (let i = 1; i <= 12; i++) {
 				let monthIncome = 0;
 				let monthExpenses = 0;
-				let month = i < 10 ? `0${i}` : `${i}`;
+				let month = i;
 				let dataFromGivenMonth = dataFromGivenYear.filter(record => {
-					return month == record.date.split(".")[1];
+					return month == record.date.split("/")[0];
 				});
 				dataFromGivenMonth.forEach(record => {
 					if (record.income) {
@@ -84,7 +88,6 @@ const generateDataToCharts = year => {
 				incomes.push(monthIncome);
 				expenses.push(monthExpenses);
 			}
-			console.log([incomes, expenses]);
 			resolve([incomes, expenses]);
 		});
 	});

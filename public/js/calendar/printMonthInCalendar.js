@@ -30,10 +30,14 @@ const whatClassToDay = numberOfDay => {
 	}
 };
 
-export const printMonthInCalendar = (month = new Date().getMonth() + 1, year = new Date().getFullYear()) => {
+export const printMonthInCalendar = (
+	month = new Date().getMonth() + 1,
+	year = new Date().getFullYear()
+) => {
 	getUserRecords().then(records => {
 		const calendar = document.querySelector(".calendar");
-		calendar.innerHTML = "<div class='weekday-name'>pon</div><div class='weekday-name'>wto</div><div class='weekday-name'>śro</div><div class='weekday-name'>czw</div><div class='weekday-name'>pią</div><div class='weekday-name'>sob</div><div class='weekday-name'>nie</div>";
+		calendar.innerHTML =
+			"<div class='weekday-name'>pon</div><div class='weekday-name'>wto</div><div class='weekday-name'>śro</div><div class='weekday-name'>czw</div><div class='weekday-name'>pią</div><div class='weekday-name'>sob</div><div class='weekday-name'>nie</div>";
 
 		for (let i = 1; i <= daysInMonth(month, year); i++) {
 			const div = document.createElement("div");
@@ -41,13 +45,22 @@ export const printMonthInCalendar = (month = new Date().getMonth() + 1, year = n
 			const date = new Date(year, month - 1, i);
 			div.classList.add(whatClassToDay(date.getDay()));
 			div.textContent = i;
-			div.id = `${i}.${month >= 10 ? month : "0" + month}.${year}`;
+			div.id = `${month}/${i}/${year}`;
+
+			console.log(records);
 
 			if (records !== null) {
 				if (records.some(record => record.date === div.id)) {
-					const thisDayRecords = records.filter(record => record.date === div.id);
-					if (thisDayRecords.some(record => record.income) && thisDayRecords.some(record => !record.income)) div.classList.add("income-expense-record");
-					else if (thisDayRecords.some(record => record.income)) div.classList.add("income-record");
+					const thisDayRecords = records.filter(
+						record => record.date === div.id
+					);
+					if (
+						thisDayRecords.some(record => record.income) &&
+						thisDayRecords.some(record => !record.income)
+					)
+						div.classList.add("income-expense-record");
+					else if (thisDayRecords.some(record => record.income))
+						div.classList.add("income-record");
 					else div.classList.add("expense-record");
 				}
 			}
@@ -57,9 +70,15 @@ export const printMonthInCalendar = (month = new Date().getMonth() + 1, year = n
 				recordsContainer.innerHTML = "";
 				thisDayRecords.forEach(record => {
 					recordsContainer.innerHTML += `
-                        <div class="record ${record.income ? "record-income" : "record-expense"}">
+                        <div class="record ${
+													record.income ? "record-income" : "record-expense"
+												}">
                             <span>${record.name}</span>
-                            <span>${Number.isInteger(record.value) ? record.value + ".00" : record.value} zł</span>
+                            <span>${
+															Number.isInteger(record.value)
+																? record.value + ".00"
+																: record.value
+														} zł</span>
                             <span>${record.date}</span>
                         </div>
                     `;
