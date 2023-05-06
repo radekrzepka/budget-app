@@ -39,19 +39,26 @@ export const printMonthInCalendar = (
 		calendar.innerHTML =
 			"<div class='weekday-name'>pon</div><div class='weekday-name'>wto</div><div class='weekday-name'>śro</div><div class='weekday-name'>czw</div><div class='weekday-name'>pią</div><div class='weekday-name'>sob</div><div class='weekday-name'>nie</div>";
 
+		const convertedRecords = [];
+		if (records !== null) {
+			for (const record of Object.keys(records)) {
+				convertedRecords.push(records[record]);
+			}
+		}
+
+		month = month < 10 ? `0${month}` : month;
+
 		for (let i = 1; i <= daysInMonth(month, year); i++) {
 			const div = document.createElement("div");
-
 			const date = new Date(year, month - 1, i);
 			div.classList.add(whatClassToDay(date.getDay()));
 			div.textContent = i;
-			div.id = `${month}/${i}/${year}`;
 
-			console.log(records);
+			div.id = `${i}.${month}.${year}`;
 
 			if (records !== null) {
-				if (records.some(record => record.date === div.id)) {
-					const thisDayRecords = records.filter(
+				if (convertedRecords.some(record => record.date === div.id)) {
+					const thisDayRecords = convertedRecords.filter(
 						record => record.date === div.id
 					);
 					if (
@@ -66,7 +73,9 @@ export const printMonthInCalendar = (
 			}
 			const printRecords = () => {
 				const recordsContainer = document.querySelector(".records-container");
-				const thisDayRecords = records.filter(record => record.date === div.id);
+				const thisDayRecords = convertedRecords.filter(
+					record => record.date === div.id
+				);
 				recordsContainer.innerHTML = "";
 				thisDayRecords.forEach(record => {
 					recordsContainer.innerHTML += `

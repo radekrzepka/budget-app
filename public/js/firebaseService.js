@@ -1,6 +1,17 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
-import { getDatabase, ref, onValue, set, update, remove } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js";
+import {
+	getAuth,
+	onAuthStateChanged,
+	signOut,
+} from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+import {
+	getDatabase,
+	ref,
+	onValue,
+	set,
+	update,
+	remove,
+} from "https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js";
 import { showList } from "./home/showList.js";
 import { updateBar } from "./home/updateBarAndGoal.js";
 import { checkFormAndAddOrSwitchData } from "./addOrSwitchNewRecord.js";
@@ -13,7 +24,8 @@ const firebaseConfig = {
 	messagingSenderId: "262068234051",
 	appId: "1:262068234051:web:301ef42c3e1b7acea571f6",
 	measurementId: "G-BWCCBTR9TV",
-	databaseURL: "https://budget-app-502e6-default-rtdb.europe-west1.firebasedatabase.app/",
+	databaseURL:
+		"https://budget-app-502e6-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 const app = initializeApp(firebaseConfig);
 
@@ -148,14 +160,23 @@ export const addEventListenerToDeleteButtons = () => {
 const showForm = event => {
 	getUserData().then(userData => {
 		const db = getDatabase();
-		const starCountRef = ref(db, `users/${userData.userID}/records/${event.currentTarget.buttonID.replace("change", "")}`);
+		const starCountRef = ref(
+			db,
+			`users/${userData.userID}/records/${event.currentTarget.buttonID.replace(
+				"change",
+				""
+			)}`
+		);
 		onValue(starCountRef, snapshot => {
 			const record = snapshot.val();
 
 			const deleteForm = () => {
 				document.querySelector(".form-template").remove();
 			};
-			const form = document.querySelector(".template-add-record-form").content.cloneNode(true).querySelector("div");
+			const form = document
+				.querySelector(".template-add-record-form")
+				.content.cloneNode(true)
+				.querySelector("div");
 			document.body.appendChild(form);
 
 			const nameInput = document.querySelector("#name");
@@ -166,7 +187,14 @@ const showForm = event => {
 
 			const dateInput = document.querySelector("#date");
 			const dayMonthYearArray = record.date.split(".");
-			const date = new Date(dayMonthYearArray[2], dayMonthYearArray[1] - 1, dayMonthYearArray[0]).toISOString().slice(0, 10);
+			const date = new Date(
+				dayMonthYearArray[2],
+				dayMonthYearArray[1] - 1,
+				parseInt(dayMonthYearArray[0]) + 1
+			)
+				.toISOString()
+				.slice(0, 10);
+
 			dateInput.value = date;
 
 			if (record.income) {
@@ -186,14 +214,21 @@ const showForm = event => {
 	});
 };
 
-export const switchData = (buttonID, newName, newValue, newDate, newIsIncome) => {
+export const switchData = (
+	buttonID,
+	newName,
+	newValue,
+	newDate,
+	newIsIncome
+) => {
 	getUserData().then(userData => {
 		const db = getDatabase();
 		const updates = {};
 		updates[`users/${userData.userID}/records/${buttonID}/name`] = newName;
 		updates[`users/${userData.userID}/records/${buttonID}/value`] = newValue;
 		updates[`users/${userData.userID}/records/${buttonID}/date`] = newDate;
-		updates[`users/${userData.userID}/records/${buttonID}/income`] = newIsIncome;
+		updates[`users/${userData.userID}/records/${buttonID}/income`] =
+			newIsIncome;
 		update(ref(db), updates);
 	});
 };

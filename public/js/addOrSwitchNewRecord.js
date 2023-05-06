@@ -17,20 +17,46 @@ export const checkFormAndAddOrSwitchData = (event = null) => {
 	const incomeRadioInput = document.querySelector("#income");
 	const exponseRadioInput = document.querySelector("#expense");
 
-	console.log(incomeRadioInput.value, exponseRadioInput.value);
-
 	const vaildateForm = () => {
-		if (nameInput.value === "" || valueInput.value === "" || dateInput.value === "" || dateInput.value === "" || (!incomeRadioInput.checked && !exponseRadioInput.checked)) return "Uzupełnij wszystkie pola formularzy.";
-		else if (parseFloat(valueInput.value) <= 0) return "Kwota musi być większa od 0 złotych.";
+		if (
+			nameInput.value === "" ||
+			valueInput.value === "" ||
+			dateInput.value === "" ||
+			dateInput.value === "" ||
+			(!incomeRadioInput.checked && !exponseRadioInput.checked)
+		)
+			return "Uzupełnij wszystkie pola formularzy.";
+		else if (parseFloat(valueInput.value) <= 0)
+			return "Kwota musi być większa od 0 złotych.";
 		else return "poprawne dane";
 	};
 
 	if (vaildateForm() === "poprawne dane") {
+		const date = new Date(dateInput.value);
+		const days = date.getDate();
+		const month =
+			date.getMonth() + 1 < 10
+				? `0${date.getMonth() + 1}`
+				: date.getMonth() + 1;
+		const year = date.getFullYear();
+		const formatedDate = `${days}.${month}.${year}`;
+
 		if (add) {
-			sendRecordToDataBase(nameInput.value, parseFloat(valueInput.value), new Date(dateInput.value).toLocaleDateString(), incomeRadioInput.checked);
+			sendRecordToDataBase(
+				nameInput.value,
+				parseFloat(valueInput.value),
+				formatedDate,
+				incomeRadioInput.checked
+			);
 		} else {
 			const buttonID = event.currentTarget.id.replace("change", "");
-			switchData(buttonID, nameInput.value, parseFloat(valueInput.value), new Date(dateInput.value).toLocaleDateString(), incomeRadioInput.checked);
+			switchData(
+				buttonID,
+				nameInput.value,
+				parseFloat(valueInput.value),
+				formatedDate,
+				incomeRadioInput.checked
+			);
 			setTimeout(deleteForm, 100);
 		}
 		deleteForm();
@@ -39,7 +65,9 @@ export const checkFormAndAddOrSwitchData = (event = null) => {
 		if (location.href == `${location.href.substring(0, lastSlash)}/home.html`) {
 			setTimeout(showList, 1);
 			setTimeout(updateBar, 1);
-		} else if (location.href == `${location.href.substring(0, lastSlash)}/calendar.html`) {
+		} else if (
+			location.href == `${location.href.substring(0, lastSlash)}/calendar.html`
+		) {
 			setTimeout(printMonthInCalendar, 1);
 		}
 	} else {
@@ -49,7 +77,10 @@ export const checkFormAndAddOrSwitchData = (event = null) => {
 };
 
 export const addEventListenerToAddRecordButton = () => {
-	const form = document.querySelector(".template-add-record-form").content.cloneNode(true).querySelector("div");
+	const form = document
+		.querySelector(".template-add-record-form")
+		.content.cloneNode(true)
+		.querySelector("div");
 
 	const addFormButton = document.querySelector(".addFormButton");
 

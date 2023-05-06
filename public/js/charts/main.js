@@ -65,8 +65,16 @@ const generatePolishMonths = year => {
 const generateDataToCharts = year => {
 	return new Promise(resolve => {
 		getUserData().then(data => {
-			const dataFromGivenYear = data.records.filter(record => {
-				const recordYear = record.date.split("/")[2];
+			const convertedDates = [];
+			if (data !== null) {
+				for (const record of Object.keys(data.records)) {
+					convertedDates.push(data.records[record]);
+				}
+			}
+			console.log(convertedDates);
+
+			const dataFromGivenYear = convertedDates.filter(record => {
+				const recordYear = record.date.split(".")[2];
 				return year == recordYear;
 			});
 			const incomes = [];
@@ -76,7 +84,7 @@ const generateDataToCharts = year => {
 				let monthExpenses = 0;
 				let month = i;
 				let dataFromGivenMonth = dataFromGivenYear.filter(record => {
-					return month == record.date.split("/")[0];
+					return month == record.date.split(".")[1];
 				});
 				dataFromGivenMonth.forEach(record => {
 					if (record.income) {
